@@ -1,5 +1,5 @@
 import asyncio
-
+import os
 import discord
 import json
 import requests
@@ -7,12 +7,14 @@ import datetime
 import webbrowser
 from discord.ext import commands
 from discord_buttons_plugin import *
+from dotenv import load_dotenv
+
+load_dotenv(verbose=True)
 
 bot = commands.Bot(command_prefix="!")
 buttons = ButtonsClient(bot)
-token = 'OTQ4NTE2MTU5NzE4ODQ2NDg1.Yh88gw.4p6Vik948MW2mRn51AfwyWTmnvk'
-url = "https://rbwls5567.pythonanywhere.com/"
-
+token = os.environ.get('DISCORD_TOKEN')
+url = os.environ.get('HOST')
 
 @bot.event
 async def on_ready():
