@@ -2,7 +2,6 @@ asyncio
 discord
 requests
 datetime
-webbrowser
 discord.ext
 discord_buttons_plugin
 dotenv
