@@ -3,4 +3,3 @@ discord
 requests
 datetime
 discord_buttons_plugin
-dotenv
