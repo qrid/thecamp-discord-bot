@@ -1,6 +1,5 @@
 asyncio
 discord
-json
 requests
 datetime
 webbrowser
