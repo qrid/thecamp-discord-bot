@@ -38,7 +38,7 @@ async def hello(ctx):
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.0.42")
+    await ctx.send("version : 0.0.43")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼'])
@@ -109,12 +109,10 @@ async def button(ctx, *, msg):
             ]
         )
         await asyncio.sleep(30)
-        await ctx.channel.purge(limit=2)
 
     except:
         await ctx.send("예) !인편 {보낸이}/{제목}/{내용} \n 으로 부탁드립니다.")
         await asyncio.sleep(30)
-        await ctx.channel.purge(limit=1)
 
 
 @buttons.click
@@ -131,21 +129,20 @@ async def send_button(ctx):
     image = None
     if image_url != discord.Embed.Empty:
         res = requests.get(image_url)
-        image = Image.open(BytesIO(res.content)).tobytes()
+        image = res.content
 
-    data = {"sender": sender, "subject": subject, "content": content, "image": image}
-    r = requests.post(url + "letter/", files=data)
+    data = {"sender": sender, "subject": subject, "content": content}
+    r = requests.post('https://httpbin.org/post', data=data, files={'image': image})
+    # url + "letter/"
     print(r.status_code)
 
     await asyncio.sleep(3)
-    await ctx.channel.purge(limit=3)
 
 
 @buttons.click
 async def cancel_button(ctx):
     await ctx.reply("취소되었습니다.")
     await asyncio.sleep(3)
-    await ctx.channel.purge(limit=3)
 
 
 bot.run(token)
