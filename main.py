@@ -34,7 +34,7 @@ async def hello(ctx):
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.0.4")
+    await ctx.send("version : 0.0.6")
 
 
 @bot.command(aliases=['이미지'])
@@ -89,7 +89,7 @@ async def button(ctx, *, msg):
         embed.add_field(name="보낸이", value=sender, inline=False)
         embed.add_field(name="제목", value=subject, inline=False)
         embed.add_field(name="내용", value=content, inline=False)
-        embed.set_thumbnail(url=image)
+        embed.set_image(url=image)
         embed.set_footer(text=f"30초 후 자동으로 취소됩니다.")
 
         await buttons.send(
@@ -126,8 +126,9 @@ async def send_button(ctx):
     sender = ctx.message.embeds[0].fields[0].value
     subject = ctx.message.embeds[0].fields[1].value + "    (From discord)"
     content = ctx.message.embeds[0].fields[2].value
+    image = ctx.message.embeds[0].image.url
 
-    data = {"sender": sender, "subject": subject, "content": content}
+    data = {"sender": sender, "subject": subject, "content": content, "image": image}
     r = requests.post(url + "letter/", json=data)
     print(r.status_code)
 
