@@ -31,6 +31,9 @@ async def on_ready():
 async def hello(ctx):
     await ctx.send("{}, 하이하이".format(ctx.author.mention))
 
+@bot.command()
+async def test(ctx, *, msg):
+    await ctx.send(f"{msg}")
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼'])
 async def when(ctx):
