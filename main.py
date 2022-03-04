@@ -38,7 +38,7 @@ async def hello(ctx):
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.0.40")
+    await ctx.send("version : 0.0.41")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼'])
@@ -133,7 +133,7 @@ async def send_button(ctx):
         res = requests.get(image_url)
         image = Image.open(BytesIO(res.content)).tobytes()
 
-    headers = {'Content-Type': 'multipart/form-data;'}
+    headers = {'Content-Type': 'multipart/form-data'}
     data = {"sender": sender, "subject": subject, "content": content, "image": image}
     r = requests.post(url + "letter/", headers=headers, data=data)
     print(r.status_code)
