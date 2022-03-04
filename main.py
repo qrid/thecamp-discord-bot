@@ -31,9 +31,9 @@ async def on_ready():
 async def hello(ctx):
     await ctx.send("{}, 하이하이".format(ctx.author.mention))
 
-@bot.command()
-async def test(ctx, *, msg):
-    await ctx.send(f"{msg}")
+@bot.command(aliases=['버전'])
+async def version(ctx, *, msg):
+    await ctx.send("version : 0.0.1")
 
 @bot.command()
 async def image(ctx, msg):
