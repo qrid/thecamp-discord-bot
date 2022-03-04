@@ -3,7 +3,7 @@ import os
 import discord
 import json
 import requests
-from urllib import request
+from urllib.request import Request, urlopen
 import datetime
 import webbrowser
 from discord.ext import commands
@@ -35,7 +35,7 @@ async def hello(ctx):
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.0.9")
+    await ctx.send("version : 0.0.10")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼'])
@@ -121,11 +121,12 @@ async def send_button(ctx):
     sender = ctx.message.embeds[0].fields[0].value
     subject = ctx.message.embeds[0].fields[1].value + "    (From discord)"
     content = ctx.message.embeds[0].fields[2].value
-    url = ctx.message.embeds[0].image.url
+    image_url = ctx.message.embeds[0].image.url
 
     image = None
-    if url != discord.Embed.Empty:
-        image = request.urlopen(url).read()
+    if image_url != discord.Embed.Empty:
+        image_url = Request(image_url, headers={'User-Agent': 'Mozilla/5.0'})
+        image = urlopen(image_url).open()
 
     data = {"sender": sender, "subject": subject, "content": content, "image": image}
     r = requests.post(url + "letter/", json=data)
