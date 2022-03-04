@@ -1,6 +1,6 @@
 import asyncio
 import os
-from urllib import Request, urlopen
+from urllib.request import Request, urlopen
 import discord
 import json
 import requests
