@@ -40,7 +40,7 @@ async def hello(ctx):
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.1.2")
+    await ctx.send("version : 0.1.3")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼'])
@@ -135,7 +135,7 @@ async def send_button(ctx):
         image_pil = Image.open(io.BytesIO(req.content))
         image_bytes = io.BytesIO()
         image_pil.save(image_bytes, image_ext)
-        image = image_bytes
+        image = image_bytes.getvalue()
 
     data = {"sender": sender, "subject": subject, "content": content}
     r = requests.post('https://httpbin.org/post', data=data, files={'image': image})
