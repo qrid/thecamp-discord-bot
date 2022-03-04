@@ -34,7 +34,7 @@ async def hello(ctx):
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.0.7")
+    await ctx.send("version : 0.0.8")
 
 
 @bot.command(aliases=['이미지'])
@@ -126,7 +126,7 @@ async def send_button(ctx):
     sender = ctx.message.embeds[0].fields[0].value
     subject = ctx.message.embeds[0].fields[1].value + "    (From discord)"
     content = ctx.message.embeds[0].fields[2].value
-    image = ctx.message.embeds[0].image.url
+    image = ctx.message.embeds[0].image.url if ctx.message.embeds[0].image.url != discord.Embed.Empty else None
     print(image)
 
     data = {"sender": sender, "subject": subject, "content": content, "image": image}
