@@ -37,7 +37,7 @@ async def test(ctx, *, msg):
 
 @bot.command()
 async def image(ctx, msg):
-    await ctx.send(f"{msg.attachments.url}")
+    await ctx.send(f"이미지 링크 : {msg.attachments.url}")
 
 
 
