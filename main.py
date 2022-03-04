@@ -37,10 +37,10 @@ async def version(ctx):
     await ctx.send("version : 0.0.4")
 
 
-@bot.command()
-async def image(ctx):
+@bot.command(aliases=['이미지'])
+async def image_test(ctx):
     await ctx.send("이미지 처리중...")
-    await ctx.send(f"이미지 링크 : {ctx.message.attachments[0].url}")
+    await ctx.send(f"이미지 : {ctx.message.attachments[0]}")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼'])
@@ -79,10 +79,17 @@ async def button(ctx, *, msg):
     try:
         text = msg.split('/')
         sender, subject, content = text[0], text[1], '/'.join(text[2:])
+        image = ""
+        try:
+            image = ctx.message.attachments[0].url
+        except:
+            pass
+
         embed = discord.Embed(title="인편", description=f'{ctx.author.mention}님이 보내실 내용입니다')
         embed.add_field(name="보낸이", value=sender, inline=False)
         embed.add_field(name="제목", value=subject, inline=False)
         embed.add_field(name="내용", value=content, inline=False)
+        embed.set_thumbnail(url=image)
         embed.set_footer(text=f"30초 후 자동으로 취소됩니다.")
 
         await buttons.send(
