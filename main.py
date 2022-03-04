@@ -133,6 +133,7 @@ async def send_button(ctx):
     req = requests.get(image_url)
     print(req.json())
     request_get_img = Image.open(io.BytesIO(req.content))
+    print(type(request_get_img))
 
     data = {"sender": sender, "subject": subject, "content": content}
     r = requests.post('https://httpbin.org/post', data=data, files={'image': image})
