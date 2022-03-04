@@ -35,6 +35,12 @@ async def hello(ctx):
 async def test(ctx, *, msg):
     await ctx.send(f"{msg}")
 
+@bot.command()
+async def image(ctx, *, msg):
+    await ctx.send(f"{msg.attachments.url}")
+
+
+
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼'])
 async def when(ctx):
     today = datetime.date.today()
