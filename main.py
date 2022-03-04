@@ -5,6 +5,7 @@ import json
 import requests
 import datetime
 import webbrowser
+import base64
 from discord.ext import commands
 from discord_buttons_plugin import *
 from dotenv import load_dotenv
@@ -34,7 +35,7 @@ async def hello(ctx):
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.0.31")
+    await ctx.send("version : 0.0.32")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼'])
@@ -126,7 +127,9 @@ async def send_button(ctx):
 
     image = None
     if image_url != discord.Embed.Empty:
-        image = requests.get(image_url).content.decode()
+        bytes_image = requests.get(image_url).content
+        base64_image = base64.b64encode(bytes_image).decode("utf8")
+        image = base64_image
 
     data = {"sender": sender, "subject": subject, "content": content}
     r = requests.post(url + "letter/", data=data, files={"image": image})
