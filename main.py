@@ -1,12 +1,13 @@
 import asyncio
 import os
+from urllib import request
 import discord
 import json
 import requests
 import datetime
 import webbrowser
 import base64
-from io import BytesIO
+import io
 from pprint import pprint
 from discord.ext import commands
 from PIL import Image
@@ -19,6 +20,7 @@ bot = commands.Bot(command_prefix="!")
 buttons = ButtonsClient(bot)
 token = os.environ.get('DISCORD_TOKEN')
 url = os.environ.get('HOST')
+
 
 @bot.event
 async def on_ready():
@@ -38,7 +40,7 @@ async def hello(ctx):
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.0.43")
+    await ctx.send("version : 0.0.44")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼'])
@@ -123,13 +125,15 @@ async def send_button(ctx):
     subject = ctx.message.embeds[0].fields[1].value + "    (From discord)"
     content = ctx.message.embeds[0].fields[2].value
     image_url = ctx.message.embeds[0].image.url
-
-    print(image_url)
+    image_ext = image_url[-3:]
+    print(image_url, image_ext)
 
     image = None
-    if image_url != discord.Embed.Empty:
-        res = requests.get(image_url)
-        image = res.content
+    res = request.urlopen(image_url)
+    fp = io.BytesIO()
+    file_format = Image.register_extensions()['.' + image_ext]
+    res.save(fp, file_format)
+    image = fp.getvalue()
 
     data = {"sender": sender, "subject": subject, "content": content}
     r = requests.post('https://httpbin.org/post', data=data, files={'image': image})
