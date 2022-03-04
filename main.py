@@ -1,6 +1,6 @@
 import asyncio
 import os
-from urllib import request
+from urllib import Request, urlopen
 import discord
 import json
 import requests
@@ -40,7 +40,7 @@ async def hello(ctx):
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.0.44")
+    await ctx.send("version : 0.0.45")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼'])
@@ -129,10 +129,11 @@ async def send_button(ctx):
     print(image_url, image_ext)
 
     image = None
-    res = request.urlopen(image_url)
+    url_req = Request(image_url, headers={'User-Agent': 'Mozilla/5.0'})
+    read_url = urlopen(url_req).read()
     fp = io.BytesIO()
     file_format = Image.register_extensions()['.' + image_ext]
-    res.save(fp, file_format)
+    read_url.save(fp, file_format)
     image = fp.getvalue()
 
     data = {"sender": sender, "subject": subject, "content": content}
