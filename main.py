@@ -36,7 +36,7 @@ async def test(ctx, *, msg):
     await ctx.send(f"{msg}")
 
 @bot.command()
-async def image(ctx, *, msg):
+async def image(ctx, msg):
     await ctx.send(f"{msg.attachments.url}")
 
 
