@@ -135,6 +135,7 @@ async def send_button(ctx):
     r = requests.post('https://httpbin.org/post', data=data, files={'image': image})
     # url + "letter/"
     print(r.status_code)
+    print(r.json())
 
     await asyncio.sleep(3)
 
