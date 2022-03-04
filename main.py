@@ -40,7 +40,7 @@ async def hello(ctx):
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.0.45")
+    await ctx.send("version : 0.0.46")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼'])
@@ -125,16 +125,14 @@ async def send_button(ctx):
     subject = ctx.message.embeds[0].fields[1].value + "    (From discord)"
     content = ctx.message.embeds[0].fields[2].value
     image_url = ctx.message.embeds[0].image.url
+    image = None
+
     image_ext = image_url[-3:]
     print(image_url, image_ext)
 
-    image = None
-    url_req = Request(image_url, headers={'User-Agent': 'Mozilla/5.0'})
-    read_url = urlopen(url_req).read()
-    fp = io.BytesIO()
-    file_format = Image.register_extensions()['.' + image_ext]
-    read_url.save(fp, file_format)
-    image = fp.getvalue()
+    req = requests.get(image_url)
+    print(req.json())
+    request_get_img = Image.open(io.BytesIO(req.content))
 
     data = {"sender": sender, "subject": subject, "content": content}
     r = requests.post('https://httpbin.org/post', data=data, files={'image': image})
