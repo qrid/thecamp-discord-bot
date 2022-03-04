@@ -135,7 +135,7 @@ async def send_button(ctx):
 
     headers = {'Content-Type': 'multipart/form-data'}
     data = {"sender": sender, "subject": subject, "content": content, "image": image}
-    r = requests.post(url + "letter/", data=data)
+    r = requests.post(url + "letter/", headers=headers, data=data)
     print(r.status_code)
     pprint(r.json())
     pprint(r.json()['headers'])
