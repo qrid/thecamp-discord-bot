@@ -34,7 +34,7 @@ async def hello(ctx):
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.0.24")
+    await ctx.send("version : 0.0.25")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼'])
@@ -126,7 +126,7 @@ async def send_button(ctx):
     if image_url != discord.Embed.Empty:
         image = requests.get(image_url).content
 
-    data = {"sender": sender, "subject": subject, "content": content},
+    data = {"sender": sender, "subject": subject, "content": content}
     r = requests.post(url + "letter/", data=data, files={"image": image})
     print(r.status_code)
 
