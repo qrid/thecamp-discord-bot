@@ -36,7 +36,7 @@ async def on_ready():
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.2.0.2")
+    await ctx.send("version : 0.2.0.3")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼', '퍼센트'])
@@ -120,20 +120,20 @@ async def send_button(ctx):
     content = ctx.message.embeds[0].fields[2].value
     image_url = ctx.message.embeds[0].image.url
 
-    image_bytes = None
-    image_ext = None
+    image = None
     if image_url != discord.Embed.Empty:
         image_ext = image_url[-3:]
 
         req = requests.get(image_url)
         image_bytes = req.content
+        image = ("discord.png", image_bytes, 'image/' + image_ext)
 
     m = MultipartEncoder(
         fields={
             "sender": sender,
             "subject": subject,
             "content": content,
-            'image': ("discord.png", image_bytes, 'image/' + image_ext) if image_bytes is not None else None
+            'image': image
         }
     )
 
