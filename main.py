@@ -36,7 +36,7 @@ async def on_ready():
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.1.4.10")
+    await ctx.send("version : 0.2.0.0")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼', '퍼센트'])
