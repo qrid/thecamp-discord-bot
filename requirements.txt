@@ -5,3 +5,4 @@ datetime
 discord_buttons_plugin
 python-dotenv
 pillow
+requests_toolbelt

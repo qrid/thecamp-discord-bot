@@ -9,6 +9,7 @@ import webbrowser
 import base64
 import io
 from pprint import pprint
+from requests_toolbelt import MultipartEncoder
 from discord.ext import commands
 from PIL import Image
 from discord_buttons_plugin import *
@@ -40,7 +41,7 @@ async def hello(ctx):
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.1.4.7")
+    await ctx.send("version : 0.1.4.8")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼'])
@@ -133,17 +134,19 @@ async def send_button(ctx):
 
         req = requests.get(image_url)
         image_bytes = req.content
-        image_io = io.BytesIO(image_bytes)
-        image_entity = Image.open(image_io)
-        output = io.BytesIO()
-        image_entity.save(output, image_ext)
-        image_binary = output.getvalue()
 
-        image = image_binary
+        m = MultipartEncoder(
+            fields={
+                "sender": sender,
+                "subject": subject,
+                "content": content,
+                'image': ("discord", image_bytes, 'image/' + image_ext)
+            }
+        )
 
-    data = {"sender": sender, "subject": subject, "content": content}
-    test = requests.post('https://httpbin.org/post', data=data, files={'image': image})
-    r = requests.post(url + "letter/", data=data, files={'image': image})
+    data = {}
+    test = requests.post('https://httpbin.org/post', data=m, headers={'Content-Type': m.content_type})
+    r = requests.post(url + "letter/", data=m, headers={'Content-Type': m.content_type})
     print(r.status_code)
     print("----------test----------")
     print(test.json())
