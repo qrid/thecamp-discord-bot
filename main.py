@@ -41,7 +41,7 @@ async def hello(ctx):
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.1.4.9")
+    await ctx.send("version : 0.1.4.10")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼'])
@@ -140,15 +140,12 @@ async def send_button(ctx):
                 "sender": sender,
                 "subject": subject,
                 "content": content,
-                'image': ("discord", image_bytes, 'image/' + image_ext)
+                'image': ("discord.png", image_bytes, 'image/' + image_ext)
             }
         )
 
-    test = requests.post('https://httpbin.org/post', data=m, headers={'Content-Type': m.content_type})
     r = requests.post(url + "letter/", data=m, headers={'Content-Type': m.content_type})
     print(r.status_code)
-    print("----------test----------")
-    print(test.json())
 
     await asyncio.sleep(3)
 
