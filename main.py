@@ -34,17 +34,12 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.online, activity=game)
 
 
-@bot.command(aliases=['ㅎㅇ', '안녕'])
-async def hello(ctx):
-    await ctx.send("{}, 하이하이".format(ctx.author.mention))
-
-
 @bot.command(aliases=['버전'])
 async def version(ctx):
     await ctx.send("version : 0.1.4.10")
 
 
-@bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼'])
+@bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼', '퍼센트'])
 async def when(ctx):
     today = datetime.date.today()
     go = datetime.date(2022, 4, 11)
@@ -75,7 +70,7 @@ async def link_button(ctx):
     )
 
 
-@bot.command(aliases=['ㅇㅍ', '인편', 'dv'])
+@bot.command(aliases=['ㅇㅍ', '인편', 'dv', '편지'])
 async def button(ctx, *, msg):
     try:
         text = msg.split('/')
@@ -111,11 +106,9 @@ async def button(ctx, *, msg):
                 ])
             ]
         )
-        await asyncio.sleep(30)
 
     except:
         await ctx.send("예) !인편 {보낸이}/{제목}/{내용} \n 으로 부탁드립니다.")
-        await asyncio.sleep(30)
 
 
 @buttons.click
@@ -126,7 +119,7 @@ async def send_button(ctx):
     subject = ctx.message.embeds[0].fields[1].value + "    (From discord)"
     content = ctx.message.embeds[0].fields[2].value
     image_url = ctx.message.embeds[0].image.url
-    m = None
+    m = {"sender": sender, "subject": subject, "content": content}
 
     if image_url != discord.Embed.Empty:
         image_ext = image_url[-3:]
@@ -147,13 +140,12 @@ async def send_button(ctx):
     r = requests.post(url + "letter/", data=m, headers={'Content-Type': m.content_type})
     print(r.status_code)
 
-    await asyncio.sleep(3)
-
 
 @buttons.click
 async def cancel_button(ctx):
     await ctx.reply("취소되었습니다.")
     await asyncio.sleep(3)
+    await ctx.message.channel.purge(limit=3)
 
 
 bot.run(token)
