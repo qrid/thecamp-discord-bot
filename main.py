@@ -36,7 +36,7 @@ async def on_ready():
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.2.0.1")
+    await ctx.send("version : 0.2.0.2")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼', '퍼센트'])
@@ -119,27 +119,25 @@ async def send_button(ctx):
     subject = ctx.message.embeds[0].fields[1].value + "    (From discord)"
     content = ctx.message.embeds[0].fields[2].value
     image_url = ctx.message.embeds[0].image.url
-    m = {"sender": sender, "subject": subject, "content": content}
-    content_type = 'multipart/form-data'
 
+    image_bytes = None
+    image_ext = None
     if image_url != discord.Embed.Empty:
         image_ext = image_url[-3:]
-        print(image_url, image_ext)
 
         req = requests.get(image_url)
         image_bytes = req.content
 
-        m = MultipartEncoder(
-            fields={
-                "sender": sender,
-                "subject": subject,
-                "content": content,
-                'image': ("discord.png", image_bytes, 'image/' + image_ext)
-            }
-        )
-        content_type = m.content_type
+    m = MultipartEncoder(
+        fields={
+            "sender": sender,
+            "subject": subject,
+            "content": content,
+            'image': ("discord.png", image_bytes, 'image/' + image_ext) if image_bytes is not None else None
+        }
+    )
 
-    r = requests.post(url + "letter/", data=m, headers={'Content-Type': content_type})
+    r = requests.post(url + "letter/", data=m, headers={'Content-Type': m.content_type})
     print(r.status_code)
 
 
