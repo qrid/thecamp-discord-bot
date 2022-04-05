@@ -1,17 +1,10 @@
 import asyncio
 import os
-from urllib.request import Request, urlopen
 import discord
-import json
 import requests
 import datetime
-import webbrowser
-import base64
-import io
-from pprint import pprint
 from requests_toolbelt import MultipartEncoder
 from discord.ext import commands
-from PIL import Image
 from discord_buttons_plugin import *
 from dotenv import load_dotenv
 
@@ -36,7 +29,7 @@ async def on_ready():
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.2.0.3")
+    await ctx.send("version : 0.2.0.4")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼', '퍼센트'])
@@ -73,9 +66,13 @@ async def link_button(ctx):
 @bot.command(aliases=['ㅇㅍ', '인편', 'dv', '편지'])
 async def button(ctx, *, msg):
     try:
-        text = msg.split('/')
-        sender, subject, content = text[0], text[1], '/'.join(text[2:])
-        image = ""
+        try:
+            text = msg.split('/')
+            sender, subject, content = text[0], text[1], '/'.join(text[2:])
+            image = ""
+        except:
+            sender, subject, content, image = ctx.message.author, "제목없음", "내용없음", ""
+
         try:
             image = ctx.message.attachments[0].url
         except:
