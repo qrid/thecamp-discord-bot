@@ -29,7 +29,7 @@ async def on_ready():
 
 @bot.command(aliases=['버전'])
 async def version(ctx):
-    await ctx.send("version : 0.2.1.1")
+    await ctx.send("version : 0.2.2.0")
 
 
 @bot.command(aliases=['전역', '언제옴', '디데이', 'dday', 'd-day', '달성률', '몇퍼', '퍼센트'])
@@ -56,7 +56,7 @@ async def link_button(ctx):
                 Button(
                     label="규진 인편 쓰러가기",
                     style=ButtonType().Link,
-                    url=url
+                    url="https://bit.ly/규진인편"
                 )
             ])
         ]
